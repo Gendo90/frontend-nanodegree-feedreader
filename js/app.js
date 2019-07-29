@@ -21,6 +21,11 @@ var allFeeds = [
         name: 'Linear Digressions',
         url: 'http://feeds.feedburner.com/udacity-linear-digressions'
     }
+    // }, {
+    //     name: 'Empty Test',
+    //     url: 'No valid link!'
+    // }
+
 ];
 
 /* This function starts up our application. The Google Feed
