@@ -11,20 +11,28 @@ var allFeeds = [
     {
         name: 'Udacity Blog',
         url: 'http://blog.udacity.com/feed'
-    }, {
+    },
+    //  duplicate to first entry to check if "new" feed loads
+    //  also check if duplicate names/urls present
+    // {
+    //     name: 'Udacity Blog',
+    //     url: 'http://blog.udacity.com/feed'
+    // }, {
+    {
         name: 'CSS Tricks',
         url: 'http://feeds.feedburner.com/CssTricks'
     }, {
+    //  empty test - invalid URL, so no entries
+    // {
+    //     name: 'Empty Test',
+    //     url: 'No valid link!'
+    // }, {
         name: 'HTML5 Rocks',
         url: 'http://feeds.feedburner.com/html5rocks'
     }, {
         name: 'Linear Digressions',
         url: 'http://feeds.feedburner.com/udacity-linear-digressions'
     }
-    // }, {
-    //     name: 'Empty Test',
-    //     url: 'No valid link!'
-    // }
 
 ];
 

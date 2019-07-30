@@ -52,6 +52,23 @@ $(function() {
              }
          });
 
+         //prevents confusion from having duplicate names for different items
+         it('do not have a duplicate name', function() {
+             for (let i=0; i<allFeeds.length; i++) {
+                 for (let j=i+1; j<allFeeds.length; j++) {
+                     expect(allFeeds[i].name).not.toBe(allFeeds[j].name)
+                 }
+             }
+         });
+
+         //prevents redundant entries from having identical URLs in allFeeds
+         it('do not have a duplicate URL', function() {
+             for (let i=0; i<allFeeds.length; i++) {
+                 for (let j=i+1; j<allFeeds.length; j++) {
+                     expect(allFeeds[i].url).not.toBe(allFeeds[j].url)
+                 }
+             }
+         });
     });
 
 
@@ -96,24 +113,67 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
 
+         //goes through each feed in allFeeds and loads the page
          beforeEach(function(done) {
-             loadFeed(0, done);
+             for (let id=0; id<allFeeds.length; id++) {
+                 loadFeed(id, done);
+             }
          });
 
-         it('should have at least one entry', function(done) {
-             let feed = document.getElementsByClassName('feed')[0];
+         //checks that there is at least one entry for the current feed loaded
+         it('should have at least one entry in the feed list', function(done) {
+            let feed = document.getElementsByClassName('feed')[0];
+            let entries = feed.getElementsByClassName('entry');
 
-             expect(feed.getElementsByClassName('entry').length).not.toBe(0);
-             done();
+            // console.log(entries.length)
+
+            expect(entries.length).not.toBe(0);
+
+            done();
          })
 
     });
 
 
     /* TODO: Write a new test suite named "New Feed Selection" */
-
+    describe('New Feed Selection', function() {
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-}());
+         let num = 0;
+         let lastFeedChildren = [];
+         let lastFeed, thisFeed;
+
+         //goes through each feed in allFeeds and loads the page
+         beforeEach(function(done) {
+             loadFeed(num, function() {
+                 lastFeed = document.querySelector(".feed").querySelectorAll("a")
+                 lastFeedChildren.push(lastFeed);
+                 done();
+             });
+         });
+
+         //Note - fails if the following item is a duplicate of the first item
+         //but there should not be duplicate feeds by design
+         it('should load new content', function(done) {
+             loadFeed(num+1, function() {
+                 //add a set timeout to this function to run it after the page loads!
+                 thisFeed = document.querySelector(".feed").querySelectorAll("a")
+
+                 lastFeedChildren.push(thisFeed);
+                 // console.log(lastFeedChildren)
+
+                 //check that the function loads new content!
+                 expect(lastFeedChildren[0]).not.toEqual(lastFeedChildren[1]);
+                 done();
+             });
+         });
+     });
+    }());
+
+//resets the webpage to the original feed (assuming it has at least one entry)
+// setTimeout(function() {
+//     loadFeed(0)
+//     console.log('back')
+// }, 1000)
