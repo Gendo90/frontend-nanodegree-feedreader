@@ -173,7 +173,7 @@ $(function() {
     }());
 
 //resets the webpage to the original feed (assuming it has at least one entry)
-// setTimeout(function() {
-//     loadFeed(0)
-//     console.log('back')
-// }, 1000)
+setTimeout(function() {
+    loadFeed(0)
+    console.log('back to beginning')
+}, 2000)

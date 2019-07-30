@@ -1,74 +1,50 @@
-# Project Overview
+# Feed Reader Testing Project
 
-In this project you are given a web-based application that reads RSS feeds. The original developer of this application clearly saw the value in testing, they've already included [Jasmine](http://jasmine.github.io/) and even started writing their first test suite! Unfortunately, they decided to move on to start their own company and we're now left with an application with an incomplete test suite. That's where you come in.
-
-
-## Why this Project?
-
-Testing is an important part of the development process and many organizations practice a standard of development known as "test-driven development." This is when developers write tests first, before they ever start developing their application. All the tests initially fail and then they start writing application code to make these tests pass.
-
-Whether you work in an organization that uses test-driven development or in an organization that uses tests to make sure future feature development doesn't break existing features, it's an important skill to have!
+This project uses Javascript unit tests to make sure that this web-based application that reads RSS feeds functions correctly. The testing framework used
+for this project is [Jasmine](http://jasmine.github.io/) and is included in the
+project using `script` tags sourced to the framework, which are contained in the `head` tag of the [index.html](index.html) file.
 
 
-## What will I learn?
+# Running the project
 
-You will learn how to use Jasmine to write a number of tests against a pre-existing application. These will test the underlying business logic of the application as well as the event handling and DOM manipulation.
+To run this project, simply clone the repo from the [github link]() and then
+open [index.html](index.html) in the browser of your choice. Do not touch anything
+for about two (2) seconds, after which all the tests should have run and the
+app should have returned to the first RSS feed. Some of the tests included for
+this project involve loading different RSS feeds and making sure they load and
+are non-empty, which is the reason for the app loading different RSS feeds for
+the first few seconds upon launch.
+
+You should be able to see that all the tests have passed by scrolling to the bottom of the page and seeing all green circles (no red X's) under the Jasmine framework
+logo. Underneath that, you should be able to read white text on a green background
+that reads **9 specs, 0 failures**, and below that you can see all the test suites and all their individual tests that were run (and should have passed). These test suites and test names should all be green text, meaning that they passed.
+
+# Test Suites
+
+The following test suites were included to test the basic functionality of this project. These test suites should not need to change much in order to test the same features of the project - but more will likely be needed to test additional functionality or features of the app as it develops. These tests should continue to pass as the app is developed; otherwise, something that was previously working in an earlier version of the app would then be broken and need to be remediated.
+
+## RSS Feeds
+
+This is the first test suite. It checks that there is at least one RSS Feed to
+use for this app, and that each RSS Feed used for this application has both a
+defined, non-empty string name, and a defined, non-empty string URL. It also
+checks every name against every other name to make sure there are no duplicates,
+which could be confusing, and checks every URL against every other URL to also ensure there are no duplicates, since that would cause the same feed information to
+be loaded twice (under different feed names, or the same feed name if both the names and URLs are duplicates).
 
 
-## How will this help my career?
+## The menu
 
-Writing effective tests requires analyzing multiple aspects of an application including the HTML, CSS and JavaScript - an extremely important skill when changing teams or joining a new company.
+This is the second test suite. It first checks that the **menu** from which a user can select different feeds is hidden from view by default, then checks that the menu's visibility can be toggled from hidden to visible and then hidden again by clicking on the **menu icon** that looks like a hamburger twice. The test suite checks for all these features by examining the classes on the HTML `body` tag, because the `menu-hidden` class applied to that tag hides the menu.
 
-Good tests give you the ability to quickly analyze whether new code breaks an existing feature within your codebase, without having to manually test all of the functionality.
+## Initial Entries
 
+This is the third test suite. It cycles through the RSS feeds using the `loadFeed`
+function, and tests the resulting pages to ensure there is at least one (1) entry
+per RSS feed page. If any of the pages have no entries, then the test should fail.
 
-# Development Strategy
+## New Feed Selection
 
-For a refresher (or reference) before you begin writing code, we recommend reviewing the content from [JavaScript Testing](https://www.udacity.com/course/javascript-testing--ud549). Your project will be evaluated by a Udacity code reviewer according to the [Feed Reader Testing project rubric](https://review.udacity.com/#!/rubrics/18/view). Please review for detailed project requirements.
-
-1. Familiarize yourself with the starter code
-    * Open up `index.html` and review the functionality of the application within your browser
-    * What is all the code in `app.js` doing? Be sure to read all code comments
-    * Check out `style.css`. How is styling applied to the application?
-2. Explore the Jasmine spec file in `feedreader.js`
-    * This is the file in which you'll be writing your tests
-    * Make sure to read all code comments here as well
-    * Review the [Jasmine documentation](http://jasmine.github.io) if needed
-3. Edit the `allFeeds` variable in `app.js` to make the provided test fail
-    * See how Jasmine visualizes this failure in your application
-    * Return the `allFeeds` variable to a passing state after reviewing the failed test
-4. Write a test that loops through each feed in the `allFeeds` object and ensures it has a URL defined _and_ that the URL is not empty
-    * For example, how would you use a `for...of` loop in this test?
-5. Write a test that loops through each feed in the `allFeeds` object and ensures it has a name defined and that the name is not empty
-    * Think about how you wrote the previous test. What are you testing for this time?
-6. Write a new test suite named `"The menu"`
-    * What are you `describe`-ing in this test suite?
-7. Write a test that ensures the menu element is hidden by default
-    * You'll have to analyze the HTML and the CSS to determine how the hiding/showing of the menu element is implemented
-    * What code in `app.js` is directly involved with toggling the menu on and off?
-8. Write a test that ensures the menu changes visibility when the menu icon is clicked. This test should have two expectations: does the menu display itself when clicked, and does it hide when clicked again?
-    * Think about how you wrote the previous test. What is different this time around?
-    * Which clickable element are you checking for?
-    * How do you "simulate" a mouse click that element without actually clicking it?
-9. Write a test suite named `"Initial Entries"`
-    * What are you `describe`-ing in this test suite?
-10. Write a test that ensures when the `loadFeed` function is called and completes its work, there is at least a single `.entry` element within the `.feed` container
-    * How does Jasmine's `beforeEach()`function work?
-    * How does the `loadFeed()` function in `app.js` work? Is it synchronous or asynchronous?
-11. Write a test suite named `"New Feed Selection"`
-    * What are you `describe`-ing in this test suite?
-12. Write a test that ensures when a new feed is loaded by the `loadFeed` function that the content actually changes
-    * How is this test different from the previous test?
-
-Additionally, note that:
-
- * No test should be dependent on the results of another
- * Callbacks should be used to ensure that feeds are loaded before they are tested
- * Error handling should be implemented for undefined variables and out-of-bound array access
- * When complete, all of your tests should pass
-
-When you're all finished, write a `README` file detailing all steps required to successfully run the application. If you have added additional tests, provide documentation for what these future features are and what the tests are checking for.
-
-# Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+This is the final test suite. It tests the `loadFeed` function by first loading
+one page (specified by a `num` variable in the code, which could be set to the
+index of any feed in `allFeeds` array in [app.js](js/app.js) except the last one), and then attempting to load the next page sequentially in `allFeeds` - if the second page does not have the same 'entries' content as the first page, then we can assume the page has updated successfully and the new feed's content is now visible in the application.
